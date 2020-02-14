@@ -8,9 +8,9 @@ Named Arguments
 ---------------
 
 ========================================  =====================================
-``--dns-clouddns-credentials``           CloudDNS Remote API credentials_
+``--dns-clouddns-credentials``            CloudDNS Remote API credentials_
                                           INI file. (Required)
-``--dns-clouddns-propagation-seconds``   The number of seconds to wait for DNS
+``--dns-clouddns-propagation-seconds``    The number of seconds to wait for DNS
                                           to propagate before asking the ACME
                                           server to verify the DNS record.
                                           (Default: 120)
@@ -23,9 +23,9 @@ Credentials
 Use of this plugin requires a configuration file containing CloudDNS Remote API
 .
 
-.. code-block:: ini
-   :name: credentials.ini
-   :caption: Example credentials file:
+Example credentials file:
+
+.. code:: ini
 
    # CloudDNS API credentials used by Certbot
    dns_clouddns_clientip = myclientid
@@ -36,7 +36,8 @@ The path to this file can be provided interactively or using the
 ``--dns-clouddns-credentials`` command-line argument. Certbot records the path
 to this file for use during renewal, but does not store the file's contents.
 
-.. caution::
+**Caution**
+
    You should protect these API credentials as you would a password. Users who
    can read this file can use these to issue arbitrary CloudDNS API calls on
    your behalf. Users who can cause Certbot to run using these credentials can
@@ -54,31 +55,32 @@ including for renewal, and cannot be silenced except by addressing the issue
 Examples
 --------
 
-.. code-block:: bash
-   :caption: To acquire a certificate for ``example.com``
+To acquire a certificate for ``example.com``
 
-   certbot certonly \\
-     --dns-clouddns \\
-     --dns-clouddns-credentials ~/.secrets/certbot/clouddns.ini \\
+.. code:: bash
+
+   certbot certonly \
+     --dns-clouddns \
+     --dns-clouddns-credentials ~/.secrets/certbot/clouddns.ini \
      -d example.com
 
-.. code-block:: bash
-   :caption: To acquire a single certificate for both ``example.com`` and
-             ``*.example.com``
+To acquire a single certificate for both ``example.com`` and ``*.example.com``
 
-   certbot certonly \\
-     --dns-clouddns \\
-     --dns-clouddns-credentials ~/.secrets/certbot/clouddns.ini \\
-     -d example.com \\
+.. code:: bash
+
+   certbot certonly \
+     --dns-clouddns \
+     --dns-clouddns-credentials ~/.secrets/certbot/clouddns.ini \
+     -d example.com \
      -d '*.example.com'
 
-.. code-block:: bash
-   :caption: To acquire a certificate for ``example.com``, waiting 240 seconds
-             for DNS propagation
+To acquire a certificate for ``example.com``, waiting 240 seconds for DNS propagation
 
-   certbot certonly \\
-     --dns-clouddns \\
-     --dns-clouddns-credentials ~/.secrets/certbot/clouddns.ini \\
-     --dns-clouddns-propagation-seconds 240 \\
+.. code:: bash
+
+   certbot certonly \
+     --dns-clouddns \
+     --dns-clouddns-credentials ~/.secrets/certbot/clouddns.ini \
+     --dns-clouddns-propagation-seconds 240 \
      -d example.com
 """
