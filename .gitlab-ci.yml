@@ -19,6 +19,11 @@ before_script:
   - pip install poetry
   - pip install tox 
 
+lint:black:
+  stage: lint
+  extends: .code
+  script: tox -e black
+
 lint:flake8:
   stage: lint
   extends: .code

@@ -2,6 +2,20 @@
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
+[tool.black]
+target-version = ['py27']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.tox
+  | build
+  | dist
+)/
+'''
+
 [tool.poetry]
 name = "certbot-dns-clouddns"
 version = "0.0.1"
