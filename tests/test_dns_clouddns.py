@@ -56,25 +56,21 @@ def client(clientid, email, password):
 
 
 class TestCloudDNSClient(object):
-
     def test_login(self, client, requests_mock):
         response_json = {"auth": {"accessToken": "cxvgs43nejfslfsj"}}
         requests_mock.post(client.login_api, json=response_json)
         client._login()
         assert client.access_token != None
 
-    def test_add_txt_record(self, client, record, record_content, record_ttl, requests_mock):
+    def test_add_txt_record(
+        self, client, record, record_content, record_ttl, requests_mock
+    ):
         response_json = {"auth": {"accessToken": "cxvgs43nejfslfsj"}}
         requests_mock.post(client.login_api, json=response_json)
 
         url = "{0}/domain/search".format(client.dns_api)
         domain_id = "fake_domain_id"
-        response_json = {
-            "items": [
-                {"id": domain_id},
-                {"id": "wrong_id"}
-            ]
-        }
+        response_json = {"items": [{"id": domain_id}, {"id": "wrong_id"}]}
         requests_mock.post(url, json=response_json)
 
         url = "{0}/record-txt".format(client.dns_api)
@@ -92,28 +88,15 @@ class TestCloudDNSClient(object):
 
         url = "{0}/domain/search".format(client.dns_api)
         domain_id = "fake_domain_id"
-        response_json = {
-            "items": [
-                {"id": domain_id},
-                {"id": "wrong_id"}
-            ]
-        }
+        response_json = {"items": [{"id": domain_id}, {"id": "wrong_id"}]}
         requests_mock.post(url, json=response_json)
 
         domain_id = "fake_domain_id"
         record_id = "fake_record_id"
         response_json = {
             "lastDomainRecordList": [
-                {
-                    "name": "wrong.domain.example",
-                    "type": "TXT",
-                    "id": "wrongid"
-                },
-                {
-                    "name": record,
-                    "type": "TXT",
-                    "id": record_id
-                }
+                {"name": "wrong.domain.example", "type": "TXT", "id": "wrongid"},
+                {"name": record, "type": "TXT", "id": record_id},
             ]
         }
         url = "{0}/domain/{1}".format(client.dns_api, domain_id)
@@ -134,16 +117,8 @@ class TestCloudDNSClient(object):
         record_id = "fake_record_id"
         response_json = {
             "lastDomainRecordList": [
-                {
-                    "name": "wrong.domain.example",
-                    "type": "TXT",
-                    "id": "wrongid"
-                },
-                {
-                    "name": record,
-                    "type": "TXT",
-                    "id": record_id
-                }
+                {"name": "wrong.domain.example", "type": "TXT", "id": "wrongid"},
+                {"name": record, "type": "TXT", "id": record_id},
             ]
         }
         url = "{0}/domain/{1}".format(client.dns_api, domain_id)

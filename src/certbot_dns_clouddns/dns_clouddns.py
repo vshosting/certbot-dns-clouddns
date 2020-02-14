@@ -106,9 +106,7 @@ class _CloudDNSClient(object):
         logger.debug("API Request to URL: %s", url)
         if resp.status_code != 200:
             breakpoint()
-            raise errors.PluginError(
-                "HTTP Error {0}".format(resp.status_code)
-            )
+            raise errors.PluginError("HTTP Error {0}".format(resp.status_code))
         try:
             result = resp.json()
         except json.JSONDecodeError:
@@ -172,25 +170,16 @@ class _CloudDNSClient(object):
             "domainId": domain_id,
             "name": record_name,
             "value": record_content,
-            "type": "TXT"
+            "type": "TXT",
         }
         return data
 
     def _prepare_domain_search(self, domain_name):
         data = {
-            "search":
-                [
-                    {
-                        "name": "clientId",
-                        "operator": "eq",
-                        "value": self.clientid
-                    },
-                    {
-                        "name": "domainName",
-                        "operator": "eq",
-                        "value": domain_name
-                    }
-                ]
+            "search": [
+                {"name": "clientId", "operator": "eq", "value": self.clientid},
+                {"name": "domainName", "operator": "eq", "value": domain_name},
+            ]
         }
         return data
 
@@ -210,7 +199,9 @@ class _CloudDNSClient(object):
         :raises certbot.errors.PluginError: if the managed zone cannot be found.
         """
 
-        domain_dns_name_guesses = [record_name] + dns_common.base_domain_name_guesses(domain)
+        domain_dns_name_guesses = [record_name] + dns_common.base_domain_name_guesses(
+            domain
+        )
 
         for domain_name in domain_dns_name_guesses:
             # Get the domain id
@@ -240,11 +231,8 @@ class _CloudDNSClient(object):
         """
         self._login()
         endpoint = "domain/{0}".format(domain_id)
-        domain_data = self._api_request("GET", endpoint)['lastDomainRecordList']
+        domain_data = self._api_request("GET", endpoint)["lastDomainRecordList"]
         for entry in domain_data:
-            if (
-                entry["name"] == record_name
-                and entry["type"] == "TXT"
-            ):
+            if entry["name"] == record_name and entry["type"] == "TXT":
                 return entry["id"]
         return None
