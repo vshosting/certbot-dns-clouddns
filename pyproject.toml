@@ -59,6 +59,7 @@ requests = "^2.22.0"
 [tool.poetry.dev-dependencies]
 flake8 = "*"
 mock = "^3.0.5"
+pre-commit = "*"
 pytest = "^4.0.0"
 requests-mock = "^1.7.0"
 
