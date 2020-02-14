@@ -1,4 +1,5 @@
 """
+
 certbot-dns-clouddns
 ====================
 
@@ -26,7 +27,7 @@ Named Arguments
 Installation
 ------------
 
-``certbot-dns-clouddns`` requires Python 3.5 or newer to run.
+``certbot-dns-clouddns`` requires Python 2.7 or 3.5+ to run.
 
 .. code:: bash
 
