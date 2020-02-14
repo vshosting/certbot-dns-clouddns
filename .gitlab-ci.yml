@@ -1,6 +1,7 @@
 image: python:3.7
 
 stages:
+  - lint
   - test
   - build
   - release
@@ -17,6 +18,11 @@ stages:
 before_script: 
   - pip install poetry
   - pip install tox 
+
+lint:flake8:
+  stage: lint
+  extends: .code
+  script: tox -e flake8
 
 test:python27:
   stage: test
