@@ -1,4 +1,5 @@
 """Tests for certbot_dns_clouddns.dns_clouddns."""
+from certbot import errors
 from certbot.compat import os
 from certbot.plugins import dns_test_common
 import pytest
@@ -12,13 +13,18 @@ def clientid():
 
 
 @pytest.fixture(scope="session")
-def email():
-    return "user@email.example"
+def email(login_server):
+    return login_server.RequestHandlerClass.EMAIL
 
 
 @pytest.fixture(scope="session")
-def password():
-    return "password"
+def password(login_server):
+    return login_server.RequestHandlerClass.PASSWORD
+
+
+@pytest.fixture(scope="session")
+def access_token(login_server):
+    return login_server.RequestHandlerClass.ACCESS_TOKEN
 
 
 @pytest.fixture(scope="session")
@@ -56,11 +62,18 @@ def client(clientid, email, password):
 
 
 class TestCloudDNSClient(object):
-    def test_login(self, client, requests_mock):
-        response_json = {"auth": {"accessToken": "cxvgs43nejfslfsj"}}
-        requests_mock.post(client.login_api, json=response_json)
+    def test_login(self, client, login_server, access_token):
+        host, port = login_server.server_address
+        client.login_api = "http://{0}:{1}/api/public/auth/login".format(host, port)
         client._login()
-        assert client.access_token != None
+        assert client.access_token == access_token
+
+    def test_wrong_credentials(self, client, login_server, access_token):
+        host, port = login_server.server_address
+        client.login_api = "http://{0}:{1}/api/public/auth/login".format(host, port)
+        client.password = "wrong password"
+        with pytest.raises(errors.PluginError):
+            client._login()
 
     def test_add_txt_record(
         self, client, record, record_content, record_ttl, requests_mock

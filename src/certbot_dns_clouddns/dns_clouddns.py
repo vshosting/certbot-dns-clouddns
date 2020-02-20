@@ -30,7 +30,7 @@ class Authenticator(dns_common.DNSAuthenticator):
     @classmethod
     def add_parser_arguments(cls, add):  # pylint: disable=arguments-differ
         super(Authenticator, cls).add_parser_arguments(
-            add, default_propagation_seconds=60
+            add, default_propagation_seconds=100
         )
         add("credentials", help="CloudDNS credentials INI file.")
 
@@ -105,7 +105,6 @@ class _CloudDNSClient(object):
         resp = self.session.request(method, url, json=data, headers=headers)
         logger.debug("API Request to URL: %s", url)
         if resp.status_code != 200:
-            breakpoint()
             raise errors.PluginError("HTTP Error {0}".format(resp.status_code))
         try:
             result = resp.json()
