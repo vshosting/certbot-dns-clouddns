@@ -5,8 +5,6 @@ except ImportError:
 import json
 import re
 
-import requests
-
 
 class MockLoginServer(server.BaseHTTPRequestHandler):
     ACCESS_TOKEN = "access_token"
@@ -45,7 +43,5 @@ class MockLoginServer(server.BaseHTTPRequestHandler):
                 400, {"code": 2001, "message": "Invalid user credentials"}
             )
             return
-        self._send_response(
-            requests.codes.ok, {"auth": {"accessToken": self.ACCESS_TOKEN}}
-        )
+        self._send_response(200, {"auth": {"accessToken": self.ACCESS_TOKEN}})
         return

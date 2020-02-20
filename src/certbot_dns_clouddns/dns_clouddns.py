@@ -130,7 +130,8 @@ class _CloudDNSClient(object):
         """
         self._login()
         o_record_name = record_name
-        record_name = "{0}.".format(o_record_name)
+        if not record_name.endswith("."):
+            record_name = "{0}.".format(o_record_name)
         domain_id, domain_name = self._find_domain_id(domain, record_name)
         if domain_id is None:
             raise errors.PluginError("Domain not known")
@@ -152,7 +153,8 @@ class _CloudDNSClient(object):
         """
         self._login()
         o_record_name = record_name
-        record_name = "{0}.".format(o_record_name)
+        if not record_name.endswith("."):
+            record_name = "{0}.".format(o_record_name)
         domain_id, domain_name = self._find_domain_id(domain, record_name)
         if domain_id is None:
             raise errors.PluginError("Domain not known")
@@ -214,7 +216,7 @@ class _CloudDNSClient(object):
                 return domain_id, domain_name
             except IndexError:
                 pass
-        return None
+        raise errors.PluginError("Domain not found")
 
     def get_record_id(self, domain_id, record_name):
         """
