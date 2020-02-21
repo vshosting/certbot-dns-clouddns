@@ -22,6 +22,7 @@ version = "1.0.0"
 description = "CloudDNS Authenticator plugin for Certbot"
 authors = ["Radek SPRTA <sprta@vshosting.cz>"]
 license = "Apache License 2.0"
+readme = "README.rst"
 homepage = "https://github.com/vshosting/certbot-dns-clouddns"
 repository = "https://github.com/vshosting/certbot-dns-clouddns"
 documentation = "https://github.com/vshosting/certbot-dns-clouddns"
