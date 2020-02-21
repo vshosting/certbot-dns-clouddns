@@ -7,8 +7,8 @@ import threading
 
 import pytest
 
-from tests import login_server as login_mock
-from tests import api_server as api_mock
+from tests.servers import login_server as login_mock
+from tests.servers import api_server as api_mock
 
 
 @pytest.fixture(scope="session")

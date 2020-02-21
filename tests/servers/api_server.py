@@ -1,12 +1,9 @@
-try:
-    from http import server
-except ImportError:
-    import BaseHTTPServer as server
-import json
 import re
 
+from tests.servers import mock_server
 
-class MockApiServer(server.BaseHTTPRequestHandler):
+
+class MockApiServer(mock_server.BaseMockServer):
     ACCESS_TOKEN = "access_token"
     CLIENT_ID = "fake_client_id_length_24"
     DOMAIN_ID = "domain_id"
@@ -24,17 +21,10 @@ class MockApiServer(server.BaseHTTPRequestHandler):
     def _check_access_token(self):
         return self.ACCESS_TOKEN in self.headers["Authorization"]
 
-    def _get_data(self):
-        content_length = int(self.headers["Content-Length"])
-        try:
-            raw_data = self.rfile.read(content_length).decode("utf-8")
-        except AttributeError:
-            raw_data = self.rfile.read(content_length)
-        return json.loads(raw_data)
-
     def _respond_add_txt_record(self, data):
         if data["domainId"] != self.DOMAIN_ID:
             self._send_response(400, {"code": 4108, "message": "Domain not found"})
+            return
         if data["name"] != self.RECORD_NAME:
             self._send_response(
                 400,
@@ -71,19 +61,6 @@ class MockApiServer(server.BaseHTTPRequestHandler):
             self._send_response(500, {"code": 500, "message": "clientId"})
             return
         self._send_response(200, {"items": [{"id": self.DOMAIN_ID}]})
-
-    def _send_data(self, data):
-        response_content = json.dumps(data)
-        self.wfile.write(response_content.encode("utf-8"))
-
-    def _send_headers(self):
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.end_headers()
-
-    def _send_response(self, code, data):
-        self.send_response(code)
-        self._send_headers()
-        self._send_data(data)
 
     def do_DELETE(self):
         if not self._check_access_token():
