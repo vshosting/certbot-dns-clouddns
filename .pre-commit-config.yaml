@@ -1,12 +1,18 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: master
+    rev: v2.5.0
     hooks:
+      - id: check-toml
+      - id: check-yaml
       - id: flake8
         exclude: tests
       - id: trailing-whitespace
   - repo: https://github.com/ambv/black
-    rev: stable
+    rev: 19.10b0
     hooks:
       - id: black
+  - repo: https://gitlab.com/devopshq/gitlab-ci-linter
+    rev: v1.0.0
+    hooks:
+      - id: gitlab-ci-linter
