@@ -18,7 +18,7 @@ exclude = '''
 
 [tool.poetry]
 name = "certbot-dns-clouddns"
-version = "0.0.1"
+version = "1.0.0"
 description = "CloudDNS Authenticator plugin for Certbot"
 authors = ["Radek SPRTA <sprta@vshosting.cz>"]
 license = "Apache License 2.0"
@@ -29,7 +29,7 @@ packages = [
     { include = "certbot_dns_clouddns", from = "src" }
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Plugins",
     "Intended Audience :: System Administrators",
     "License :: OSI Approved :: Apache Software License",

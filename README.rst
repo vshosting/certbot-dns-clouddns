@@ -1,5 +1,3 @@
-"""
-
 certbot-dns-clouddns
 ====================
 
@@ -102,5 +100,3 @@ To acquire a certificate for ``example.com``, waiting 240 seconds for DNS propag
      --certbot-dns-clouddns:dns-clouddns-credentials ~/.secrets/certbot/clouddns.ini \
      --certbot-dns-clouddns:dns-clouddns-propagation-seconds 240 \
      -d example.com
-
-"""
