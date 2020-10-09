@@ -18,7 +18,7 @@ exclude = '''
 
 [tool.poetry]
 name = "certbot-dns-clouddns"
-version = "1.0.0.post1"
+version = "1.0.0.post2"
 description = "CloudDNS Authenticator plugin for Certbot"
 authors = ["Radek SPRTA <sprta@vshosting.cz>"]
 license = "Apache License 2.0"
@@ -53,9 +53,9 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-acme = "^0.29.0"
-certbot = "^0.34.0"
-requests = "^2.22.0"
+acme = "*"
+certbot = "*"
+requests = "*"
 
 [tool.poetry.dev-dependencies]
 flake8 = "*"
