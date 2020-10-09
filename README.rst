@@ -41,7 +41,7 @@ Use of this plugin requires a configuration file containing CloudDNS Remote API
 .. code:: bash
 
    curl --silent --request POST https://admin.vshosting.cloud/api/public/auth/login \
-   --data '{"email":"<email>","password":"<password>"}'
+   --data '{"email":"<email>","password":"<password>"}' \
    --header "Content-Type: application/json" \
      | grep --perl-rexexp --only-matching '"clientId": \K"[^"]"' \
      | head -n 1 \
