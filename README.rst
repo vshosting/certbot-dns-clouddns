@@ -29,23 +29,32 @@ Installation
 
 .. code:: bash
 
-   pip install certbot-dns-clouddns
+   pip3 install certbot-dns-clouddns
 
 
 Credentials
 -----------
 
 Use of this plugin requires a configuration file containing CloudDNS Remote API
-.
+. You can find out the clientId by running the following command:
+
+.. code:: bash
+
+   curl --silent --request POST https://admin.vshosting.cloud/api/public/auth/login \
+   --data '{"email":"<email>","password":"<password>"}'
+   --header "Content-Type: application/json" \
+     | grep --perl-rexexp --only-matching '"clientId": \K"[^"]"' \
+     | head -n 1 \
+     | tr -d '"'
 
 Example credentials file:
 
 .. code:: ini
 
    # CloudDNS API credentials used by Certbot
-   certbot-dns-clouddns:dns_clouddns_clientip = myclientid
-   certbot-dns-clouddns:dns_clouddns_email = myemailaddress
-   certbot-dns-clouddns:dns_clouddns_password = mysecretpassword
+   certbot_dns_clouddns:dns_clouddns_clientId = myclientid
+   certbot_dns_clouddns:dns_clouddns_email = myemailaddress
+   certbot_dns_clouddns:dns_clouddns_password = mysecretpassword
 
 The path to this file can be provided interactively or using the
 ``--certbot-dns-clouddns:dns-clouddns-credentials`` command-line argument.
